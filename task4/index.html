@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Тест таблиці множення</title>
+</head>
+
+<body>
+    <h1>Таблиця множення - Тест</h1>
+
+    <p>Загальний рахунок: <span id="score">0</span></p>
+
+    <button id="nextButton" onclick="generateQuestion()">Наступне завдання</button>
+
+    <p id="question"></p>
+
+    <input type="text" id="userAnswer">
+    <button onclick="checkAnswer()">Перевірити</button>
+
+    <p id="result"></p>
+
+    <script>
+        var currentQuestion = null;
+        var score = 0;
+        var questionCount = 0;
+
+        function generateQuestion() {
+            if (questionCount < 10) {
+                var num1 = Math.floor(Math.random() * 10) + 1;
+                var num2 = Math.floor(Math.random() * 10) + 1;
+
+                currentQuestion = num1 + " x " + num2 + " = ?";
+                document.getElementById("question").textContent = currentQuestion;
+
+                document.getElementById("result").textContent = "";
+                document.getElementById("userAnswer").value = "";
+                questionCount++;
+            } else {
+                document.getElementById("question").textContent = "Тест завершено!";
+                document.getElementById("nextButton").style.display = "none";
+                document.getElementById("userAnswer").style.display = "none";
+                document.getElementsByTagName("button")[1].style.display = "none";
+            }
+        }
+
+        function checkAnswer() {
+            if (currentQuestion) {
+                var userAnswer = document.getElementById("userAnswer").value.trim();
+
+                if (!isNaN(userAnswer)) {
+                    var nums = currentQuestion.split("x");
+                    var correctAnswer = parseInt(nums[0].trim()) * parseInt(nums[1].trim());
+
+                    if (parseInt(userAnswer) === correctAnswer) {
+                        document.getElementById("result").textContent = "Правильно!";
+                        score++;
+                    } else {
+                        document.getElementById("result").textContent = "Неправильно. Правильна відповідь: " + correctAnswer;
+                    }
+                    document.getElementById("score").textContent = score;
+                } else {
+                    document.getElementById("result").textContent = "Будь ласка, введіть число.";
+                }
+            }
+        }
+
+        generateQuestion();
+    </script>
+</body>
+
+</html>

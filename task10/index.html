@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Перегляд світлин</title>
+    <style>
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        .mySlides {
+            display: none;
+            max-width: 100%;
+        }
+
+        img {
+            width: 50%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slideshow-container">
+        <div class="mySlides">
+            <img src="image1.jpg" alt="Зображення 1">
+        </div>
+
+        <div class="mySlides">
+            <img src="image2.jpg" alt="Зображення 2">
+        </div>
+
+        <div class="mySlides">
+            <img src="image3.jpg" alt="Зображення 3">
+        </div>
+
+        <div class="mySlides">
+            <img src="image4.jpg" alt="Зображення 4">
+        </div>
+
+        <div class="mySlides">
+            <img src="image5.jpg" alt="Зображення 5">
+        </div>
+
+        <div class="mySlides">
+            <img src="image6.jpg" alt="Зображення 6">
+        </div>
+
+        <div class="mySlides">
+            <img src="image7.jpg" alt="Зображення 7">
+        </div>
+
+        <div class="mySlides">
+            <img src="image8.jpg" alt="Зображення 8">
+        </div>
+
+        <div class="mySlides">
+            <img src="image9.jpg" alt="Зображення 9">
+        </div>
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        showSlides(slideIndex);
+
+        function showSlides(n) {
+            let i;
+            const slides = document.getElementsByClassName("mySlides");
+
+            if (n >= slides.length) {
+                slideIndex = 0;
+            }
+            if (n < 0) {
+                slideIndex = slides.length - 1;
+            }
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            slides[slideIndex].style.display = "block";
+        }
+
+        document.getElementsByClassName("slideshow-container")[0].addEventListener("click", function () {
+            slideIndex++;
+            showSlides(slideIndex);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Зміна розміру картинки</title>
+    <style>
+        img {
+            transition: all 0.3s;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <img id="myImage" src="картинка.jpg" width="200" height="200">
+    <button onclick="changeSize()">Змінити розмір</button>
+
+    <script>
+        let enlarged = false;
+
+        function changeSize() {
+            const img = document.getElementById('myImage');
+            if (!enlarged) {
+                img.style.width = `${img.width * 2}px`;
+                img.style.height = `${img.height * 2}px`;
+                enlarged = true;
+            } else {
+                img.style.width = '200px';
+                img.style.height = '200px';
+                enlarged = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

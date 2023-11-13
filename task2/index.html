@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Формування рядку з вибраними електронними адресами</title>
+</head>
+
+<body>
+    <h1>Виберіть електронні адреси:</h1>
+    <input type="checkbox" id="email1" value="email1@example.com"> email1@example.com<br>
+    <input type="checkbox" id="email2" value="email2@example.com"> email2@example.com<br>
+    <input type="checkbox" id="email3" value="email3@example.com"> email3@example.com<br>
+    <input type="checkbox" id="email4" value="email4@example.com"> email4@example.com<br>
+
+    <div id="selectedEmails"></div>
+
+    <script>
+        var selectedEmailsDiv = document.getElementById("selectedEmails");
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                var selectedEmails = "";
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selectedEmails += checkbox.value + ", ";
+                    }
+                });
+
+
+                selectedEmails = selectedEmails.slice(0, -2);
+
+
+                selectedEmailsDiv.textContent = selectedEmails;
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Список товарів і кошик</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 8px;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Список товарів:</h2>
+    <table>
+        <tr>
+            <th>Назва товару</th>
+            <th>Замовити</th>
+        </tr>
+        <tr>
+            <td>Товар 1</td>
+            <td><button onclick="addToCart(1)">Замовити</button></td>
+        </tr>
+        <tr>
+            <td>Товар 2</td>
+            <td><button onclick="addToCart(2)">Замовити</button></td>
+        </tr>
+        <tr>
+            <td>Товар 3</td>
+            <td><button onclick="addToCart(3)">Замовити</button></td>
+        </tr>
+        <tr>
+            <td>Товар 4</td>
+            <td><button onclick="addToCart(4)">Замовити</button></td>
+        </tr>
+    </table>
+
+    <h2>Кошик:</h2>
+    <table>
+        <tr>
+            <th>Назва товару</th>
+            <th>Кількість</th>
+        </tr>
+        <tbody id="cart"></tbody>
+    </table>
+
+    <script>
+        function addToCart(itemId) {
+            const cart = document.getElementById('cart');
+            const existingItems = cart.getElementsByTagName('tr');
+
+            let itemExists = false;
+            for (let i = 0; i < existingItems.length; i++) {
+                const itemName = existingItems[i].getElementsByTagName('td')[0];
+                if (itemName.textContent === `Товар ${itemId}`) {
+                    const itemQuantity = existingItems[i].getElementsByTagName('td')[1];
+                    let quantity = parseInt(itemQuantity.textContent) + 1;
+                    itemQuantity.textContent = quantity;
+                    itemExists = true;
+                    break;
+                }
+            }
+
+            if (!itemExists) {
+                const item = document.createElement('tr');
+                const itemName = document.createElement('td');
+                itemName.textContent = `Товар ${itemId}`;
+                const itemQuantity = document.createElement('td');
+                itemQuantity.textContent = '1';
+
+                item.appendChild(itemName);
+                item.appendChild(itemQuantity);
+                cart.appendChild(item);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Зміна розміру та кута повороту блока</title>
+    <style>
+        #resizeBlock {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            /* Зміна коліру блоку */
+            border: 2px solid blue;
+            /* Зміна коліру контуру */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .slider {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="resizeBlock" onmousedown="startResize(event)"></div>
+
+    <p>Ширина: <span id="widthValue">200</span> см</p>
+    <input type="range" min="0" max="500" value="200" class="slider" id="sizeSlider">
+
+    <p>Висота: <span id="heightValue">200</span> см</p>
+    <input type="range" min="0" max="500" value="200" class="slider" id="heightSlider">
+
+    <p>Кут повороту: <span id="rotationValue">0</span> градусів</p>
+    <input type="range" min="0" max="360" value="0" class="slider" id="rotationSlider">
+
+    <script>
+        let isResizing = false;
+        let startX, startY;
+        let initialWidth, initialHeight;
+        const resizeBlock = document.getElementById('resizeBlock');
+        const sizeSlider = document.getElementById('sizeSlider');
+        const heightSlider = document.getElementById('heightSlider');
+        const rotationSlider = document.getElementById('rotationSlider');
+        const widthValue = document.getElementById('widthValue');
+        const heightValue = document.getElementById('heightValue');
+        const rotationValue = document.getElementById('rotationValue');
+
+        sizeSlider.addEventListener('input', () => {
+            resizeBlock.style.width = `${sizeSlider.value}px`;
+            widthValue.textContent = sizeSlider.value;
+        });
+
+        heightSlider.addEventListener('input', () => {
+            resizeBlock.style.height = `${heightSlider.value}px`;
+            heightValue.textContent = heightSlider.value;
+        });
+
+        rotationSlider.addEventListener('input', () => {
+            resizeBlock.style.transform = `rotate(${rotationSlider.value}deg)`;
+            rotationValue.textContent = rotationSlider.value;
+        });
+
+        function startResize(e) {
+            e.preventDefault();
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialWidth = parseFloat(getComputedStyle(resizeBlock, null).getPropertyValue('width'));
+            initialHeight = parseFloat(getComputedStyle(resizeBlock, null).getPropertyValue('height'));
+
+            document.addEventListener('mousemove', resizeBlockFn);
+            document.addEventListener('mouseup', stopResize);
+        }
+
+        function resizeBlockFn(e) {
+            if (!isResizing) return;
+            const width = initialWidth + e.clientX - startX;
+            const height = initialHeight + e.clientY - startY;
+
+            resizeBlock.style.width = `${width}px`;
+            sizeSlider.value = width;
+            widthValue.textContent = width;
+
+            resizeBlock.style.height = `${height}px`;
+            heightSlider.value = height;
+            heightValue.textContent = height;
+        }
+
+        function stopResize() {
+            isResizing = false;
+            document.removeEventListener('mousemove', resizeBlockFn);
+            document.removeEventListener('mouseup', stopResize);
+        }
+    </script>
+</body>
+
+</html>

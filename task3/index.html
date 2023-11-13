@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Тест таблиці множення</title>
+</head>
+
+<body>
+    <h1>Таблиця множення - Тест</h1>
+
+    <p>Загальний рахунок: <span id="score">0</span></p>
+
+    <button id="nextButton" onclick="generateQuestion()">Наступне завдання</button>
+
+    <p id="question">Завдання буде тут</p>
+
+    <input type="radio" name="answer" id="option1" value="1"> <label for="option1" id="label1">Відповідь 1</label><br>
+    <input type="radio" name="answer" id="option2" value="2"> <label for="option2" id="label2">Відповідь 2</label><br>
+    <input type="radio" name="answer" id="option3" value="3"> <label for="option3" id="label3">Відповідь 3</label><br>
+
+    <p id="result"></p>
+
+    <script>
+        var currentQuestion = null;
+        var score = 0;
+        var questions = [];
+
+        for (var i = 0; i < 10; i++) {
+            questions.push(generateRandomQuestion());
+        }
+
+        function generateRandomQuestion() {
+            var num1 = Math.floor(Math.random() * 10) + 1;
+            var num2 = Math.floor(Math.random() * 10) + 1;
+            var correctAnswer = num1 * num2;
+
+            var options = [];
+            options.push(correctAnswer);
+
+            while (options.length < 3) {
+                var randomOption = Math.floor(Math.random() * 100) + 1;
+                if (options.indexOf(randomOption) === -1) {
+                    options.push(randomOption);
+                }
+            }
+
+            options = shuffle(options);
+
+            var currentQuestion = num1 + " x " + num2 + " = ?";
+            var currentAnswer = options.indexOf(correctAnswer) + 1;
+
+            return { question: currentQuestion, options: options, answer: currentAnswer };
+        }
+
+        function shuffle(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        function generateQuestion() {
+            var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (selectedAnswer && parseInt(selectedAnswer.value) === currentQuestion.answer) {
+                score++;
+            }
+
+            if (questions.length > 0) {
+                currentQuestion = questions.pop();
+
+                document.getElementById("question").textContent = currentQuestion.question;
+                document.getElementById("label1").textContent = currentQuestion.options[0];
+                document.getElementById("label2").textContent = currentQuestion.options[1];
+                document.getElementById("label3").textContent = currentQuestion.options[2];
+
+                var radioButtons = document.querySelectorAll('input[name="answer"]');
+                radioButtons.forEach(button => {
+                    button.checked = false;
+                });
+            } else {
+                document.getElementById("question").textContent = "Тест завершено";
+                document.getElementById("result").textContent = "Загальний рахунок: " + score + " з 10";
+                document.getElementById("nextButton").disabled = true;
+            }
+
+            document.getElementById("score").textContent = score;
+        }
+
+        generateQuestion();
+    </script>
+</body>
+
+</html>
